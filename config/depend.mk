@@ -37,13 +37,13 @@ LOOP_SUBDIRS = \
 	done
 endif
 
-$(BLTPRGEXE):	$(BLTPRGOBJ) $(BLTGENOBJ)
+$(BLTPRGEXE):	$(BLTPRGOBJ) $(BLTGENOBJ) $(BLTPBOBJ)
 	@$(CHKDIR)
-	$(LDCMD) -o $@ $(CPPFLAGS) $(DEFS) $(LDFLAGS) $(INCS) $(BLTPRGOBJ) $(BLTGENOBJ) $(LIBS)
+	$(LDCMD) -o $@ $(CPPFLAGS) $(DEFS) $(LDFLAGS) $(INCS) $(BLTPRGOBJ) $(BLTGENOBJ) $(BLTPBOBJ) $(LIBS)
 
 $(BLTLIBA):		$(BLTLIBOBJ) $(BLTGENOBJ)
 	@$(CHKDIR)
-	$(ARCMD) $(ARFLAGS) -o $@ $(BLTLIBOBJ) $(BLTGENOBJ) $(LIBS)
+	$(ARCMD) $(ARFLAGS) -o $@ $(BLTLIBOBJ) $(BLTGENOBJ)
 
 $(BLTGENSRC):	$(THRIFTSRC)
 	@$(CHKDIR)
@@ -74,6 +74,12 @@ $(OBJDIR)/%.d:		$(GENDIR)/%.cpp
 	perl -p -e 's#(\S+.o)\s*:#$(@D)/$$1 $@: #g' > $@; \
 	[ -s $@ ] || rm -f $@
 
-$(BLTDEP):	$(BLTGENSRC)
+$(GENDIR)/%.pb.h $(GENDIR)/%.pb.cpp:	%.proto
+	@$(CHKDIR)
+	sh -c "($(PROTOC) --cpp_out=$(GENDIR) \
+                      --descriptor_set_out=$(OBJDIR)/$*.fds $< && \
+		mv $(GENDIR)/$*.pb.cc $(GENDIR)/$*.pb.cpp)"
 
-.PRECIOUS:		$(BLTGENSRC)
+$(BLTDEP):	$(GENHDRSRC)
+
+.PRECIOUS:		$(GENHDRSRC)

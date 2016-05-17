@@ -20,6 +20,26 @@ BLTLIBOBJ =	$(LIBSRC:%.cpp=$(OBJDIR)/%.o)
 BLTPRGOBJ =	$(PRGSRC:%.cpp=$(OBJDIR)/%.o)
 BLTPRGEXE =	$(PRGEXE:%=$(OBJDIR)/%)
 
+BLTPBHDR = $(PROTO:%.proto=$(GENDIR)/%.pb.h)
+BLTPBSRC = $(PROTO:%.proto=$(GENDIR)/%.pb.cpp)
+BLTPBOBJ = $(BLTPBSRC:$(GENDIR)/%.cpp=$(OBJDIR)/%.o)
+
+BLTPBGEN = $(BLTPBHDR) $(BLTPBSRC)
+
+GENHDRSRC +=	$(BLTPBHDR) $(BLTPBSRC)
+
+BLTDEP +=		$(BLTPBSRC:$(GENDIR)/%.cpp=$(OBJDIR)/%.dx)
+
+ifneq (,$(BLTPBGEN))
+CLEANFILES += $(BLTPBGEN)
+CLOBBERFILES += $(BLTPBGEN)
+endif
+
+ifeq (,$(filter-out Linux, $(SYSNAME)))
+PROTOC = protoc
+LIBS += -lprotobuf
+endif
+
 MAKE =			gmake
 
 CPPCMD =		g++

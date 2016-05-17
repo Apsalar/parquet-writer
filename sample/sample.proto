@@ -1,0 +1,21 @@
+package sample;
+
+message Document {
+    required int64 DocId = 1;
+
+    message mlinks {
+        repeated int64 Backward = 1;
+        repeated int64 Forward = 2;
+    }
+    optional mlinks Links = 2;
+
+    message mname {
+        message mlanguage {
+            required string Code = 1;
+            optional string Country = 2;
+        }
+        repeated mlanguage Language = 1;
+        optional string Url = 2;
+    }
+    repeated mname Name = 3;
+}
