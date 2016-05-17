@@ -6,14 +6,14 @@
 
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 #include <cerrno>
+#include <cstdint>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <vector>
-#include <cstdint>
-
-#include <glog/logging.h>
 
 #include "sample.pb.h"
 

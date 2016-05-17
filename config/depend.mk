@@ -10,6 +10,15 @@ ifdef CLEANDIRS
 endif
 		+$(LOOP_SUBDIRS)
 
+clobber::
+ifdef CLOBBERFILES
+		rm -f $(CLOBBERFILES)
+endif
+ifdef CLOBBERDIRS
+		rm -rf $(CLOBBERDIRS)
+endif
+		+$(LOOP_SUBDIRS)
+
 INIT::
 
 FORCE:
@@ -76,9 +85,10 @@ $(OBJDIR)/%.d:		$(GENDIR)/%.cpp
 
 $(GENDIR)/%.pb.h $(GENDIR)/%.pb.cpp:	%.proto
 	@$(CHKDIR)
-	sh -c "($(PROTOC) --cpp_out=$(GENDIR) \
-                      --descriptor_set_out=$(OBJDIR)/$*.fds $< && \
-		mv $(GENDIR)/$*.pb.cc $(GENDIR)/$*.pb.cpp)"
+	mkdir -p $(OBJDIR)
+	$(PROTOC) --cpp_out=$(GENDIR) \
+              --descriptor_set_out=$(OBJDIR)/$*.fds $< && \
+		mv $(GENDIR)/$*.pb.cc $(GENDIR)/$*.pb.cpp
 
 $(BLTDEP):	$(GENHDRSRC)
 

@@ -30,15 +30,15 @@ GENHDRSRC +=	$(BLTPBHDR) $(BLTPBSRC)
 
 BLTDEP +=		$(BLTPBSRC:$(GENDIR)/%.cpp=$(OBJDIR)/%.dx)
 
+CLOBBERDIRS =	$(OBJDIR) $(GENDIR)
+
 ifneq (,$(BLTPBGEN))
 CLEANFILES += $(BLTPBGEN)
 CLOBBERFILES += $(BLTPBGEN)
 endif
 
-ifeq (,$(filter-out Linux, $(SYSNAME)))
 PROTOC = protoc
 LIBS += -lprotobuf
-endif
 
 MAKE =			gmake
 
