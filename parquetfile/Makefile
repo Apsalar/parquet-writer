@@ -2,7 +2,7 @@ ROOTDIR =	..
 
 include $(ROOTDIR)/config/define.mk
 
-LIBSO = 	libparquetfile
+LIBA = 		libparquetfile
 
 LIBSRC =	\
 			compressor.cpp \
@@ -18,8 +18,8 @@ CPPFLAGS +=	\
 
 INCS +=		-I. -I$(ROOTDIR)/parquetformat/GENSRC
 
-ALLTRG =	$(BLTLIBSO)
+ALLTRG =	$(BLTLIBA)
 
-CLEANFILES = $(BLTLIBOBJ) $(BLTLIBSO) $(BLTDEP)
+CLEANFILES = $(BLTLIBOBJ) $(BLTLIBA) $(BLTDEP)
 
 include $(ROOTDIR)/config/depend.mk

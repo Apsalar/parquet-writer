@@ -4,7 +4,7 @@ include $(ROOTDIR)/config/define.mk
 
 THRIFTSRC = $(ROOTDIR)/modules/parquet-format/src/main/thrift/parquet.thrift
 
-LIBSO = 	libparquetformat
+LIBA = 		libparquetformat
 
 GENHDR =	\
 			parquet_types.h \
@@ -16,8 +16,8 @@ GENSRC =	\
 			parquet_constants.cpp \
 			$(NULL)
 
-ALLTRG =	$(BLTLIBSO)
+ALLTRG =	$(BLTLIBA)
 
-CLEANFILES = $(BLTGENSRC) $(BLTLIBOBJ) $(BLTGENOBJ) $(BLTLIBSO) $(BLTDEP)
+CLEANFILES = $(BLTGENSRC) $(BLTLIBOBJ) $(BLTGENOBJ) $(BLTLIBA) $(BLTDEP)
 
 include $(ROOTDIR)/config/depend.mk

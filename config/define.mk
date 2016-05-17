@@ -1,6 +1,8 @@
 GENDIR =	GENSRC
 OBJDIR =	OBJDIR
 
+SYSNAME = $(subst /,_,$(shell uname -s))
+
 BLTGENSRC =	\
 			$(GENHDR:%=$(GENDIR)/%) \
 			$(GENSRC:%=$(GENDIR)/%) \
@@ -12,7 +14,7 @@ DEPSRC =	$(GENSRC:%=$(GENDIR)/%) $(LIBSRC) $(PRGSRC)
 BLTDEP0 =	$(DEPSRC:$(GENDIR)/%.cpp=$(OBJDIR)/%.d)
 BLTDEP =	$(BLTDEP0:%.cpp=$(OBJDIR)/%.d)
 
-BLTLIBSO =	$(LIBSO:%=$(OBJDIR)/%.so)
+BLTLIBA =	$(LIBA:%=$(OBJDIR)/%.a)
 BLTLIBOBJ =	$(LIBSRC:%.cpp=$(OBJDIR)/%.o)
 
 BLTPRGOBJ =	$(PRGSRC:%.cpp=$(OBJDIR)/%.o)
@@ -23,13 +25,18 @@ MAKE =			gmake
 CPPCMD =		g++
 
 ifeq ($(BUILD),DEBUG)
-CPPFLAGS =		-g -Wall -fPIC
+CPPFLAGS =		-g -Wall -Werror
 else
-CPPFLAGS =		-g -Wall -fPIC -Werror -O3
+CPPFLAGS =		-g -Wall -Werror -O3
 endif
 
-SOCMD =			g++
-SOFLAGS =		-shared
+ifeq ($(SYSNAME), SunOS)
+ARCMD =			gar
+ARFLAGS =		rcs
+else
+ARCMD =			ar
+ARFLAGS =		rcs
+endif
 
 LDCMD =			g++
 LDFLAGS =

@@ -26,6 +26,7 @@ LIBS +=		\
 			-lprotobuf \
 			-lthrift \
 			-lsnappy \
+			-lz \
 			-L/usr/local/ssl/lib -lssl -lcrypto \
 			$(NULL)
 
@@ -34,3 +35,7 @@ ALLTRG =	$(BLTPRGEXE)
 CLEANFILES = $(BLTPRGEXE) $(BLTPRGOBJ) $(BLTDEP)
 
 include $(ROOTDIR)/config/depend.mk
+
+$(BLTPRGEXE):	$(ROOTDIR)/parquetformat/OBJDIR/libparquetformat.a
+
+$(BLTPRGEXE):	$(ROOTDIR)/parquetfile/OBJDIR/libparquetfile.a
