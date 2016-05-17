@@ -2,7 +2,7 @@ ROOTDIR =	..
 
 include $(ROOTDIR)/config/define.mk
 
-THRIFTSRC = $(ROOTDIR)/modules/parquet-format/src/main/thrift/parquet.thrift
+THRIFTSRC = $(ROOTDIR)/modules/parquet-format/src/thrift/parquet.thrift
 
 LIBA = 		libparquetformat
 
