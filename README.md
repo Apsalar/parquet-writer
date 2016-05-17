@@ -2,7 +2,7 @@
 Introduction
 ----------------------------------------------------------------
 
-This project provides libparquetfile, a C++ library which generates
+This project provides libparquetfile, a C++ library which can generate
 parquet files.
 
 Additionally the proto2parq application is provided which can convert
@@ -46,8 +46,7 @@ The output of this program can be piped into proto2parq and converted
 to parquet format:
 
     cd sample/OBJDIR
-    ./sample | \
-        ../../proto2parq/OBJDIR/proto2parq --outfile=sample.parquet
+    ./sample | ../../proto2parq/OBJDIR/proto2parq --outfile=sample.parquet
 
 The protobuf schema is prepended to the begining of the protobuf data
 output.
